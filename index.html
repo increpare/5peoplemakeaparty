@@ -33,7 +33,7 @@
     <text x="311" y="25" text-anchor="middle" font-size="15" fill="#f4eee6">↻ Restart</text>
   </g>
   <g id="party" transform="translate(0,20)"></g>
-  <svg id="board"></svg>
+  <g id="board"></g>
 </svg>
 <div id="win">
   <h2>FIVE PEOPLE MAKE A PARTY!</h2>
@@ -143,8 +143,7 @@ let undoState = null; // the position before the latest swipe; only one step is 
 stage.setAttribute('viewBox', `0 0 ${W} ${PARTY_H + H}`);
 stage.style.aspectRatio = `${W} / ${PARTY_H + H}`;
 stage.style.width = `min(100%, calc((100vh - 100px) * ${W / (PARTY_H + H)}))`;
-for (const [k, v] of Object.entries({ viewBox: `0 0 ${W} ${H}`, y: PARTY_H, width: W, height: H }))
-  board.setAttribute(k, v);
+board.setAttribute('transform', `translate(0,${PARTY_H})`);
 
 const rand = n => Math.floor(Math.random() * n);
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -334,11 +333,14 @@ function undo() {
 let drag = null;
 
 function cellAt(e) {
-  // map through the board's own coordinate system; its bounding rect only covers the
-  // blocks still on it, so it shrinks as the board empties
-  const m = board.getScreenCTM();
-  const pt = new DOMPoint(e.clientX, e.clientY).matrixTransform(m.inverse());
-  return { r: Math.floor(pt.y / S), c: Math.floor(pt.x / S), size: S * m.a };
+  // measure from the stage's CSS box: getScreenCTM disagrees between browsers, and the
+  // board's own bounding rect only covers the blocks still on it
+  const box = stage.getBoundingClientRect(), k = box.width / W;
+  return {
+    r: Math.floor(((e.clientY - box.top) / k - PARTY_H) / S),
+    c: Math.floor((e.clientX - box.left) / k / S),
+    size: S * k,
+  };
 }
 
 function endDrag() {
