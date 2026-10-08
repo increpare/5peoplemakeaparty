@@ -1,5 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
-<path d="M22,66 Q22,24 50,24 Q78,24 78,66 Z" fill="#1aa59a"/>
-     <rect x="19" y="58" width="62" height="16" rx="7" fill="#0f7d74"/>
-     <circle cx="50" cy="20" r="9" fill="#fff" stroke="#0f7d74" stroke-width="2"/>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+     xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+     viewBox="0 0 100 100" width="100" height="100">
+  <desc>Show the locked Body reference layer to align the clothing. Hide it again before saving for the game. The guide matches the game's outfit placement; some body parts lie outside this clothing page.</desc>
+  <!-- Inverse of the clothing's placement in game.js, keeping the guide aligned. -->
+  <g id="body-reference" inkscape:groupmode="layer" inkscape:label="Body reference (show to align)"
+     sodipodi:insensitive="true" style="display:none;opacity:0.4">
+    <g transform="scale(2.5) translate(-30,9)">
+      <rect x="41" y="62" width="5.5" height="30" fill="#f2c9a0"/>
+      <rect x="53.5" y="62" width="5.5" height="30" fill="#f2c9a0"/>
+      <ellipse cx="43" cy="93" rx="6" ry="3" fill="#333"/>
+      <ellipse cx="57" cy="93" rx="6" ry="3" fill="#333"/>
+      <circle cx="36" cy="56.5" r="3.2" fill="#f2c9a0"/>
+      <circle cx="64" cy="56.5" r="3.2" fill="#f2c9a0"/>
+      <path transform="translate(29,27) scale(.42)" d="M32,22 L13,65 L22,69 L37,44 Z M68,22 L87,65 L78,69 L63,44 Z" fill="#f2c9a0"/>
+      <circle cx="50" cy="26" r="11" fill="#f2c9a0"/>
+      <circle cx="46" cy="26" r="1.3" fill="#333"/>
+      <circle cx="54" cy="26" r="1.3" fill="#333"/>
+      <path d="M46,31 Q50,34 54,31" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"/>
+    </g>
+  </g>
+  <g id="clothing" inkscape:groupmode="layer" inkscape:label="Clothing">
+    <path d="M22,66 Q22,24 50,24 Q78,24 78,66 Z" fill="#1aa59a"/>
+    <rect x="19" y="58" width="62" height="16" rx="7" fill="#0f7d74"/>
+    <circle cx="50" cy="20" r="9" fill="#fff" stroke="#0f7d74" stroke-width="2"/>
+  </g>
 </svg>

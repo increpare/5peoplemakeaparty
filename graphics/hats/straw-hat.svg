@@ -1,5 +1,28 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
-<ellipse cx="50" cy="65" rx="45" ry="8" fill="#d9b84a" stroke="#a8892a" stroke-width="1.5"/>
-     <path d="M33,63 Q33,36 50,36 Q67,36 67,63 Z" fill="#d9b84a" stroke="#a8892a" stroke-width="1.5"/>
-     <path d="M33,60 Q50,66 67,60 L67,52 Q50,58 33,52 Z" fill="#3a8fd6"/>
+<svg xmlns="http://www.w3.org/2000/svg"
+     xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+     xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+     viewBox="0 0 100 100" width="100" height="100">
+  <desc>Show the locked Body reference layer to align the clothing. Hide it again before saving for the game. The guide matches the game's outfit placement; some body parts lie outside this clothing page.</desc>
+  <!-- Inverse of the clothing's placement in game.js, keeping the guide aligned. -->
+  <g id="body-reference" inkscape:groupmode="layer" inkscape:label="Body reference (show to align)"
+     sodipodi:insensitive="true" style="display:none;opacity:0.4">
+    <g transform="scale(2.5) translate(-30,9)">
+      <rect x="41" y="62" width="5.5" height="30" fill="#f2c9a0"/>
+      <rect x="53.5" y="62" width="5.5" height="30" fill="#f2c9a0"/>
+      <ellipse cx="43" cy="93" rx="6" ry="3" fill="#333"/>
+      <ellipse cx="57" cy="93" rx="6" ry="3" fill="#333"/>
+      <circle cx="36" cy="56.5" r="3.2" fill="#f2c9a0"/>
+      <circle cx="64" cy="56.5" r="3.2" fill="#f2c9a0"/>
+      <path transform="translate(29,27) scale(.42)" d="M32,22 L13,65 L22,69 L37,44 Z M68,22 L87,65 L78,69 L63,44 Z" fill="#f2c9a0"/>
+      <circle cx="50" cy="26" r="11" fill="#f2c9a0"/>
+      <circle cx="46" cy="26" r="1.3" fill="#333"/>
+      <circle cx="54" cy="26" r="1.3" fill="#333"/>
+      <path d="M46,31 Q50,34 54,31" fill="none" stroke="#333" stroke-width="1.2" stroke-linecap="round"/>
+    </g>
+  </g>
+  <g id="clothing" inkscape:groupmode="layer" inkscape:label="Clothing">
+    <ellipse cx="50" cy="65" rx="45" ry="8" fill="#d9b84a" stroke="#a8892a" stroke-width="1.5"/>
+    <path d="M33,63 Q33,36 50,36 Q67,36 67,63 Z" fill="#d9b84a" stroke="#a8892a" stroke-width="1.5"/>
+    <path d="M33,60 Q50,66 67,60 L67,52 Q50,58 33,52 Z" fill="#3a8fd6"/>
+  </g>
 </svg>
