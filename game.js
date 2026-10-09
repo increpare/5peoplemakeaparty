@@ -72,7 +72,7 @@ function blockMarkup(b) {
 // ---------- state & layout ----------
 const $ = id => document.getElementById(id);
 const board = $('board'), stage = $('stage'), party = $('party');
-const SEATS = 5, START_MINUTES = 18 * 60, PARTY_H = 160;
+const SEATS = 5, START_MINUTES = 18 * 60, PARTY_H = 184;
 const W = COLS * S, H = ROWS * S;
 let grid, seats, swipes, over, busy = false;
 let undoState = null; // the position before the latest swipe; only one step is kept
