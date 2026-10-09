@@ -31,18 +31,34 @@ const ART = {
   ],
 };
 
-// SVG image references work both on a web server and when index.html is opened locally.
+// Decorative graphics use the complete SVG image.
 function svgImage(src, x = 0, y = 0, width = S, height = S) {
   return `<image href="${src}" x="${x}" y="${y}" width="${width}" height="${height}"/>`;
 }
 
+// Only render the Clothing layer, regardless of the guide's saved visibility.
+// Keep id="clothing" when editing. External SVG fragments require a web server.
+function clothingImage(src, x = 0, y = 0, width = S, height = S) {
+  return `<svg x="${x}" y="${y}" width="${width}" height="${height}" viewBox="0 0 100 100"><use href="${src}#clothing"/></svg>`;
+}
+
+function centerStandaloneClothing(svg) {
+  if (!svg.isConnected) return;
+  const bounds = svg.querySelector('use').getBBox();
+  if (!bounds.width || !bounds.height) return; // External artwork is still loading.
+  // Move the viewport to the artwork's centre without changing its size or SVG file.
+  const x = bounds.x + bounds.width / 2 - S / 2;
+  const y = bounds.y + bounds.height / 2 - S / 2;
+  svg.setAttribute('viewBox', `${x} ${y} ${S} ${S}`);
+}
+
 function personArt(h, j, p) {
   return svgImage('graphics/person-body.svg') +
-    svgImage(ART.pants[p], 29, 55, 42, 42) +
+    clothingImage(ART.pants[p], 29, 55, 42, 42) +
     svgImage('graphics/person-arms.svg') +
-    svgImage(ART.jacket[j], 29, 27, 42, 42) +
+    clothingImage(ART.jacket[j], 29, 27, 42, 42) +
     svgImage('graphics/person-face.svg') +
-    svgImage(ART.hat[h], 30, -9, 40, 40);
+    clothingImage(ART.hat[h], 30, -9, 40, 40);
 }
 
 function blockMarkup(b) {
@@ -50,7 +66,7 @@ function blockMarkup(b) {
   // This transparent outline is styled by CSS while a tile is held.
   const tile = svgImage(`graphics/tiles/${b.kind}.svg`) +
     `<rect class="tile" x="${inset}" y="${inset}" width="${S - 2 * inset}" height="${S - 2 * inset}" rx="14" fill="none" stroke="transparent"/>`;
-  return tile + (b.kind === 'outfit' ? personArt(b.h, b.j, b.p) : svgImage(ART[b.kind][b.v]));
+  return tile + (b.kind === 'outfit' ? personArt(b.h, b.j, b.p) : clothingImage(ART[b.kind][b.v]));
 }
 
 // ---------- state & layout ----------
@@ -75,7 +91,7 @@ const chairX = i => W / 2 + (i - 2) * Math.min(120, (W - 80) / 4);
 function drawParty() {
   let chairs = '', guests = '';
   for (let i = 0; i < SEATS; i++) {
-    chairs += svgImage('graphics/chair.svg', chairX(i) - 32, 28, 64, 84);
+    chairs += svgImage('graphics/chair.svg', chairX(i) - 32, 28, 64, 124);
     if (seats[i]) guests += `<g transform="translate(${chairX(i) - 55},2) scale(1.1)">${personArt(...seats[i])}</g>`;
   }
   const x0 = chairX(0) - 50, x1 = chairX(SEATS - 1) + 50;
@@ -99,10 +115,21 @@ function makeBlock(data, r, c) {
   el.setAttribute('class', 'block');
   el.innerHTML = blockMarkup(data);
   board.appendChild(el);
+  if (data.kind !== 'outfit') {
+    const clothing = el.querySelector('svg');
+    clothing.classList.add('standalone-clothing');
+    requestAnimationFrame(() => centerStandaloneClothing(clothing));
+  }
   const b = { ...data, el };
   place(b, r, c);
   return b;
 }
+
+// The first frame may precede external SVG loading. Also centre after resources load;
+// later deals and Undo use the cached artwork and are handled in makeBlock above.
+window.addEventListener('load', () => {
+  board.querySelectorAll('.standalone-clothing').forEach(centerStandaloneClothing);
+});
 
 // rebuild the board from rows of piece descriptions (null = empty cell)
 function setGrid(cells) {

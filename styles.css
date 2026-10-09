@@ -1,4 +1,4 @@
-html, body { margin: 0; height: 100%; background: #2a2433; color: #f4eee6; font-family: system-ui, sans-serif; }
+html, body { margin: 0; height: 100%; background: #2a2433; color: #f4eee6; font-family: "Times New Roman"}
 body { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 8px; box-sizing: border-box; }
 button { font: inherit; padding: 4px 10px; border-radius: 6px; border: 0; background: #f4eee6; color: #2a2433; }
 h1 { margin: 0; font-size: 20px; letter-spacing: 2px; text-align: center; }
