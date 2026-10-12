@@ -64,9 +64,12 @@ function personArt(h, j, p) {
 function blockMarkup(b) {
   const inset = b.kind === 'outfit' ? 5 : 4;
   // This transparent outline is styled by CSS while a tile is held.
-  const tile = svgImage(`graphics/tiles/${b.kind}.svg`) +
+  const tile = `<rect class="card-shadow" x="10" y="10" width="96" height="96" rx="18" fill="#000"/>` +
+    svgImage(`graphics/tiles/${b.kind}.svg`) +
     `<rect class="tile" x="${inset}" y="${inset}" width="${S - 2 * inset}" height="${S - 2 * inset}" rx="14" fill="none" stroke="transparent"/>`;
-  return tile + (b.kind === 'outfit' ? personArt(b.h, b.j, b.p) : clothingImage(ART[b.kind][b.v]));
+  const art = b.kind === 'outfit' ? personArt(b.h, b.j, b.p) : clothingImage(ART[b.kind][b.v]);
+  // Inset the complete card while keeping grid positions and swipe targets unchanged.
+  return `<g transform="translate(6,6) scale(.88)">${tile}${art}</g>`;
 }
 
 // ---------- state & layout ----------
@@ -87,15 +90,15 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 const pad = n => String(n).padStart(2, '0');
 
 // ---------- party table ----------
-const chairX = i => W / 2 + (i - 2) * Math.min(120, (W - 80) / 4);
+const chairX = i => W / 2 + (i - 2) * Math.min(120, (W - 120) / 4);
 function drawParty() {
   let chairs = '', guests = '';
   for (let i = 0; i < SEATS; i++) {
     chairs += svgImage('graphics/chair.svg', chairX(i) - 32, 28, 64, 124);
     if (seats[i]) guests += `<g transform="translate(${chairX(i) - 55},2) scale(1.1)">${personArt(...seats[i])}</g>`;
   }
-  const x0 = chairX(0) - 50, x1 = chairX(SEATS - 1) + 50;
-  party.innerHTML = chairs + guests + svgImage('graphics/table.svg', x0, 98, x1 - x0, 40);
+  const x0 = -10, x1 = W + 10;
+  party.innerHTML = chairs + guests + svgImage('graphics/table.svg', x0, 70, x1 - x0, 68);
 }
 function clockText() {
   const m = START_MINUTES + swipes;
